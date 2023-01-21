@@ -6,8 +6,10 @@ from loadimg import *
 from game_loop import *
 
 pygame.init()
-    
-screen = pygame.display.set_mode((1200, 600))    #set the display mode, window title and FPS clock
+
+screen_x = 1200
+screen_y = 600
+screen = pygame.display.set_mode((screen_x, screen_y))    #set the display mode, window title and FPS clock
 pygame.display.set_caption('screen')
 FPSCLOCK = pygame.time.Clock()
 
@@ -118,32 +120,31 @@ while True:
                     image = list_of_dictionaries[index_of_list].get(tile)
 
                     if index_of_list==0:
-                        screen.blit(image, (centered_x, centered_y-800))
+                        screen.blit(image, (centered_x, centered_y-screen_y))
                     elif tile!=0:
-                        screen.blit(image, (centered_x, centered_y-800))
+                        screen.blit(image, (centered_x, centered_y-screen_y))
 
 
         if pygame.mouse.get_pressed()[0]:
             clicked_x,clicked_y = pygame.mouse.get_pos()
             clicked_x=clicked_x
-            clicked_y=clicked_y+800
+            clicked_y=clicked_y+screen_y
             text_surface2 = the_gui_font.render((f"Coordinates on screen (x,y): {clicked_x},{clicked_y-800}, camera (x,y): {camera_x},{camera_y}"), False, (33, 33, 33))
             screen.blit(text_surface2,(0,25))
                 
-            if (900>clicked_y-800>800)==False: #if click is not inside the bottom gui borders
-                    isometric_corrected_x = int(((2*clicked_y - clicked_x)*0.5)/32)+4
-                    isometric_corrected_y = int(((((2*clicked_y + clicked_x)*0.5)/32))-20)
+            isometric_corrected_x = int(((2*clicked_y - clicked_x)*0.5)/32)+4
+            isometric_corrected_y = int(((((2*clicked_y + clicked_x)*0.5)/32))-15)
 
-                    e_text=""
-                    p_text=""
+            e_text=""
+            p_text=""
                         
                     #if entity_visible[isometric_corrected_y][isometric_corrected_x]!=0:
                     #    e_text= f" It has a {entity_names.get(entity_visible[isometric_corrected_y][isometric_corrected_x])} on it."
                         
-                    tiletext= f" This tile is {tile_names.get(map_visible[isometric_corrected_y][isometric_corrected_x])}."
+            tiletext= f" This tile is {tile_names.get(map_visible[isometric_corrected_y][isometric_corrected_x])}."
 
-                    text_surface = the_gui_font.render((f"You clicked (x:{isometric_corrected_x+camera_x-display_tiles_x}, y:{isometric_corrected_y+camera_y-display_tiles_y}).{tiletext}{e_text}{p_text}"), False, (33, 33, 33))
-                    screen.blit(text_surface,(0,0))
+            text_surface = the_gui_font.render((f"You clicked (x:{isometric_corrected_x+camera_x-display_tiles_x}, y:{isometric_corrected_y+camera_y-display_tiles_y}).{tiletext}{e_text}{p_text}"), False, (33, 33, 33))
+            screen.blit(text_surface,(0,0))
 
     FPSCLOCK.tick(60)
     pygame.display.flip()

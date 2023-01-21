@@ -5,6 +5,8 @@ import os
 pops_list = []
 
 map_full = np.load(f'{os.getcwd()}/noise-generator/saved_arrays/601-b.npy',allow_pickle=True)
+grid = map_full.shape
+print(grid)
 
 def move(pop_,direction,map_full,entity_full=None):
     revert = [pop_.placement[0],pop_.placement[1]]        
@@ -13,9 +15,9 @@ def move(pop_,direction,map_full,entity_full=None):
     pop_.placement = [point_x,point_y]
 
     point_on_map = int(map_full[pop_.placement[1]][pop_.placement[0]])
-    point_on_entity = int(entity_full[pop_.placement[1]][pop_.placement[0]])
-    
-    if (point_on_map in [0,4]) or (point_on_entity!=0):
+    #point_on_entity = int(entity_full[pop_.placement[1]][pop_.placement[0]])
+    #print(point_on_entity)
+    if (point_on_map in [0,4]):# or (point_on_entity!=0):
         pop_.placement = revert
         pop_.energy-=10
 
@@ -25,7 +27,7 @@ def create_pop(index,pops_number,map_array,pops_list):
         pops_list.append(poppy)
     return pops_list
 
-def create_entity_map(map_full,object,target,amounts,entity_full=None):
+def create_entity_map(map_full,object,target,amounts,entity_full):
     if len(entity_full)==0:
         entity_full = np.zeros(map_full.shape)
     
