@@ -14,7 +14,7 @@ pygame.display.set_caption('screen')
 FPSCLOCK = pygame.time.Clock()
 
 ttf_path = os.path.join(sys.path[0], "manaspc.ttf")
-the_gui_font = pygame.font.Font(ttf_path, 14)
+the_gui_font = pygame.font.Font(ttf_path, 18)
 
 tile_list, tile_names, tile_map, tiles_number = load_images(
     ["iso_water","iso_fertile","iso_grass","iso_desert","border"],0,"resources")
@@ -137,13 +137,14 @@ while True:
 
             e_text=""
             p_text=""
+            t_text = "The time is "+str(int(time))+"."
                         
-                    #if entity_visible[isometric_corrected_y][isometric_corrected_x]!=0:
-                    #    e_text= f" It has a {entity_names.get(entity_visible[isometric_corrected_y][isometric_corrected_x])} on it."
+            if entity_visible[isometric_corrected_y][isometric_corrected_x]!=0:
+                e_text= f" It has a {entity_names.get(entity_visible[isometric_corrected_y][isometric_corrected_x])} on it."
                         
             tiletext= f" This tile is {tile_names.get(map_visible[isometric_corrected_y][isometric_corrected_x])}."
 
-            text_surface = the_gui_font.render((f"You clicked (x:{isometric_corrected_x+camera_x-display_tiles_x}, y:{isometric_corrected_y+camera_y-display_tiles_y}).{tiletext}{e_text}{p_text}"), False, (33, 33, 33))
+            text_surface = the_gui_font.render((f"You clicked (x:{isometric_corrected_x+camera_x-display_tiles_x}, y:{isometric_corrected_y+camera_y-display_tiles_y}).{tiletext}{e_text}{p_text}{t_text}"), False, (33, 33, 33))
             screen.blit(text_surface,(0,0))
 
     FPSCLOCK.tick(60)
